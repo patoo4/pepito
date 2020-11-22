@@ -8,7 +8,7 @@ namespace SpriteKind {
     export const boss = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.boss, function (sprite, otherSprite) {
-    statusbar.value += 5
+    statusbar.value += -20
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
