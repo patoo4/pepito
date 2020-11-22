@@ -1,44 +1,17 @@
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace SpriteKind {
     export const magiatopdown = SpriteKind.create()
+    export const boss = SpriteKind.create()
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    magia = sprites.createProjectileFromSprite(img`
-        . . . . . . 8 8 8 8 . . . . . . 
-        . . . . . 8 . . . . 8 . . . . . 
-        . . . . 8 . 5 5 5 5 . 8 . . . . 
-        . . . 8 . 5 . . . . 5 . 8 . . . 
-        . . 8 . 5 . . . . . . 5 . 8 . . 
-        . 8 . 5 . . . . . . . . 5 . 8 . 
-        8 . 5 . . . . . . . . . . 5 . 8 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, jugador, 0, -100)
-    magia = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        8 . 5 . . . . . . . . . . 5 . 8 
-        . 8 . 5 . . . . . . . . 5 . 8 . 
-        . . 8 . 5 . . . . . . 5 . 8 . . 
-        . . . 8 . 5 . . . . 5 . 8 . . . 
-        . . . . 8 . 5 5 5 5 . 8 . . . . 
-        . . . . . 8 . . . . 8 . . . . . 
-        . . . . . . 8 8 8 8 . . . . . . 
-        `, jugador, 0, 100)
-    magia = sprites.createProjectileFromSprite(img`
+sprites.onOverlap(SpriteKind.Player, SpriteKind.boss, function (sprite, otherSprite) {
+    statusbar.value += 5
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
         . . . . . . 8 . . . . . . . . . 
         . . . . . 8 . . . . . . . . . . 
         . . . . 8 . 5 . . . . . . . . . 
@@ -56,7 +29,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . 8 . . . . . . . . . . 
         . . . . . . 8 . . . . . . . . . 
         `, jugador, -100, 0)
-    magia = sprites.createProjectileFromSprite(img`
+    projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . 8 . . . . . . 
         . . . . . . . . . . 8 . . . . . 
         . . . . . . . . . 5 . 8 . . . . 
@@ -75,19 +48,64 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . 8 . . . . . . 
         `, jugador, 100, 0)
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
-    enemy_1.destroy(effects.spray, 500)
-    magia.destroy(effects.spray, 500)
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . 8 8 8 8 . . . . . . 
+        . . . . . 8 . . . . 8 . . . . . 
+        . . . . 8 . 5 5 5 5 . 8 . . . . 
+        . . . 8 . 5 . . . . 5 . 8 . . . 
+        . . 8 . 5 . . . . . . 5 . 8 . . 
+        . 8 . 5 . . . . . . . . 5 . 8 . 
+        8 . 5 . . . . . . . . . . 5 . 8 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, jugador, 0, -100)
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        8 . 5 . . . . . . . . . . 5 . 8 
+        . 8 . 5 . . . . . . . . 5 . 8 . 
+        . . 8 . 5 . . . . . . 5 . 8 . . 
+        . . . 8 . 5 . . . . 5 . 8 . . . 
+        . . . . 8 . 5 5 5 5 . 8 . . . . 
+        . . . . . 8 . . . . 8 . . . . . 
+        . . . . . . 8 8 8 8 . . . . . . 
+        `, jugador, 0, 100)
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
-    jugador.destroy()
+    jugador.destroy(effects.ashes, 500)
     game.over(false)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.boss, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
+    info.changeScoreBy(-5)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
+    info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     statusbar.value += -0.1
 })
+let enemy_2: Sprite = null
 let enemy_1: Sprite = null
-let magia: Sprite = null
+let projectile: Sprite = null
 let statusbar: StatusBarSprite = null
 let jugador: Sprite = null
 jugador = sprites.create(img`
@@ -299,5 +317,29 @@ forever(function () {
     enemy_1.setVelocity(30, 30)
     enemy_1.setPosition(randint(0, 1000), randint(0, 1000))
     enemy_1.follow(jugador, 50)
-    pause(1000)
+    pause(500)
+})
+forever(function () {
+    enemy_2 = sprites.create(img`
+        f f 1 1 1 1 . . . . 1 1 1 1 f f 
+        f 1 1 1 1 5 . . . . 5 1 1 1 1 f 
+        1 1 1 1 f f 5 . . 5 f f 1 1 1 1 
+        1 1 1 5 f f f 5 5 f f f 5 1 1 1 
+        1 1 f f 5 f f 5 5 f f 5 f f 1 1 
+        1 5 f f f 5 f 5 5 f 5 f f f 5 1 
+        . . 5 f f f 5 5 5 5 f f f 5 . . 
+        . . . 5 5 5 5 5 5 5 5 5 5 . . . 
+        . . . 5 5 5 5 5 5 5 5 5 5 . . . 
+        . . 5 f f f 5 5 5 5 f f f 5 . . 
+        1 5 f f f 5 f 5 5 f 5 f f f 5 1 
+        1 1 f f 5 f f 5 5 f f 5 f f 1 1 
+        1 1 1 5 f f f 5 5 f f f 5 1 1 1 
+        1 1 1 1 f f 5 . . 5 f f 1 1 1 1 
+        f 1 1 1 1 5 . . . . 5 1 1 1 1 f 
+        f f 1 1 1 1 . . . . 1 1 1 1 f f 
+        `, SpriteKind.boss)
+    enemy_2.setVelocity(30, 30)
+    enemy_2.follow(jugador, 25)
+    enemy_2.setPosition(randint(0, 1000), randint(0, 1000))
+    pause(5000)
 })
