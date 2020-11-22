@@ -5,7 +5,8 @@
         "device": "*",
         "animation": "*",
         "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.3.1",
-        "storyboard": "*"
+        "storyboard": "*",
+        "darts": "*"
     },
     "files": [
         "main.blocks",
